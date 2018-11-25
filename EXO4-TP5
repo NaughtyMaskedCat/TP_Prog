@@ -1,0 +1,32 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Sat Nov 24 16:53:52 2018
+
+@author: Ondina
+"""
+
+""".4 Lire et Analyser un fichier EMBL
+Écrire un parser de fiche EMBL appelé parseEMBL(). Celui-ci doit retourner un dictionnaire contenant l'ID,
+l'organisme dont provient la séquence (à récupérer dans FT source), la séquence nucléique et si elle est présente,
+la séquence protéique. Ce dictionnaire aura comme clés "ID" et "organism", "SQ", et éventuellement
+"translation". Bien tester votre parser (vérifier que la taille de la séquence calculée avec la fonction
+len() est égale à la taille indiquée dans le fichier par exemple)."""
+
+f1 = open("C:/Users/Ondina/Downloads/AY411291.embl.txt","r")
+f2 = open("C:/Users/Ondina/Downloads/X65923.embl.txt","r")
+f3 = open("C:/Users/Ondina/Downloads/X64823.embl.txt","r")
+
+def parseEMBL(f):
+    seq = []
+    for line in f:
+        if line.startswith('SQ'): 
+            for line in f:
+    #le programme commence a lire a partir díci
+                seq.append(line[5:-4])
+    print(seq)
+ 
+parseEMBL(f1)
+
+f1.close()
+f2.close()
+f3.close()
