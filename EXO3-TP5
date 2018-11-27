@@ -1,0 +1,83 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Wed Nov 21 15:59:10 2018
+
+@author: d14001970
+"""
+from textwrap import wrap
+
+"""3 Lire et Analyser un fichier EGC
+3.1 − Écrire un parser parseEGC1() de fichier Emboss Genetic Code. Il devra retourner un dictionnaire, qui, à
+chaque codon, associe l'acide aminé correspondant. Testez-le sur les deux exemples fournis.
+"""
+
+f1 = open("C:/Users/utilisateur/Documents/Cours/M1 DLAD Bioinfo/Programmation/EGC.0.txt")
+f2 = open("C:/Users/utilisateur/Documents/Cours/M1 DLAD Bioinfo/Programmation/EGC.23.txt")
+
+def parseEGC1(f):
+    while True:
+        ligne = f.readline()
+        if ligne.startswith('AAs'):
+            break
+    AAs = ligne[9:-1]
+    f.readline() # ligne Starts sans interet
+    Base1 = f.readline()[9:-1]
+    Base2 = f.readline()[9:-1]
+    Base3 = f.readline()[9:-1]
+    Base = Base1 + Base2 + Base3
+    Tri = wrap(Base,3)    
+    AA = wrap(AAs,1)    
+    dictionary = {Tri:AA for Tri, AA in zip(Tri,AA)}
+    return dictionary
+        
+#print(parseEGC1(f1))
+
+"""3.2 
+−
+Écrire un parserparseEGC2() de fichier Emboss Genetic Code. Il devra retourner un dictionnaire, qui, à
+chaque acide aminé, associe la liste de codons qui codent pour lui.  Testez-le sur les deux exemples fournis."""
+
+def parserparseEGC2(f):
+    res = {}
+    aa = []
+    codon = []
+    while True:
+        ligne = f.readline()
+        if ligne.startswith('AAs'):
+            break
+    AAs = ligne[9:-1]
+    f.readline() # ligne Starts sans interet
+    Base1 = f.readline()[9:-1]
+    Base2 = f.readline()[9:-1]
+    Base3 = f.readline()[9:-1]   
+    for i in range(len(AAs)):
+        aa.append(AAs[i])
+        codon.append(Base1[i] + Base2[i] + Base3[i])
+        res = { aa : codon for aa, codon in zip(aa,codon)}
+    return res
+
+#print(parserparseEGC2(f1))
+
+"""3.3 
+−
+Écrire un  parserparseEGC() de fichier Emboss Genetic Code. Il devra retourner un couple de
+dictionnaires, ou mieux un dictionnaire (de dictionnaires) à 2 clés : "codon2aa" et "aa2codon"
+."""
+
+def parserparseEGC(f):
+    while True:
+        line = f.readline()
+        if line == '':
+                # either end of file or just a blank line.....
+                # we'll assume EOF, because we don't have a choice with the while loop!
+                break
+        print(parseEGC1(f),parserparseEGC2(f))
+        #mon fichier tourne a l'infini je ne sais pas comment regler le probleme
+   #print(codon2aa, aa2codon)
+
+parserparseEGC(f2)
+
+#print(parserparseEGC(f2))
+
+f1.close()
+f2.close()
