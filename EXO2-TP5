@@ -1,0 +1,75 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Wed Nov 21 14:20:00 2018
+
+@author: d14001970
+"""
+
+"""2 Lire et Analyser un fichier FASTA
+2.1 − Écrire un parser
+ (i.e. une fonction qui lise le contenu d'un fichier et le stocke en mémoire en utilisant une
+structure de données appropriée) pour un fichier contenant une séquence au format FASTA (cf fichier 
+fasta1) appelé parseFASTA(). Il retournera soit un couple (identifiant, séquence) ou un dictionnaire à 2 clés : 
+"id"et "seq". Vous testerez votre parser en affichant (proprement) les informations retournées. """
+
+#fichier = open("/amuhome/d14001970/Téléchargements/LacZ.fasta")
+fichier = open("C:/Users/utilisateur/Documents/Cours/M1 DLAD Bioinfo/Programmation/LacZ.fasta.txt")
+#first_line = fichier.readline() #affiche la premiere ligne
+
+def parseFASTA(f):
+    seq = []
+    ID = fichier.readline()[4:-18]
+    for line in fichier:
+        seq.append(line[0:-2])
+#    print(ID, seq)
+    dict_pF = {ID:seq}
+    return dict_pF
+#    toutesLignes = fichier.readlines()
+#    seq = toutesLignes[1:]
+#    seq = ''.join(seq)
+#    ids = toutesLignes[0]
+#    ids = ids.split(',')
+#    ids = ids[0].split('|')
+#    print ("ID:",ids[1],"Sequence:", seq)
+   
+print(parseFASTA(fichier))
+#lire fichier et enregistrer les donnees
+    
+"""2.2 − Écrire un parser
+parseMultiFASTA() pour un fichier contenant plusieurs séquences au format FASTA (cf fichier 
+fasta2), encore appelé multi-FASTA. Le parser doit retourner une liste de couples ou une liste
+de dictionnaires. Il doit également fonctionner avec le fichier de test du 1.1."""
+
+fichier_2 = open("C:/Users/utilisateur/Documents/Cours/M1 DLAD Bioinfo/Programmation/sequences.fasta.txt")
+#t = fichier_2.readlines()
+
+def parseMultiFASTA(f):
+    ID = []
+    sequence = []
+    for line in f:
+        if '>' in line:
+            ID.append(line[5:-18])
+        elif '>' not in line:
+            sequence.append(line[1:-2])
+    sequence = ','.join(sequence)
+    sequence = sequence.split(',,,')
+    for i in range(len(sequence)):
+        sequence[i] = sequence[i].replace(',','')
+#    print(len(sequence))
+#    print(ID)
+    
+    dict_pMF = {sequence:ID for sequence, ID in zip(sequence,ID)}
+#    new_dict = {k: v for k, v in zip(keys, values)}
+    print(dict_pMF)
+#fc =  fichier_2.readlines()
+#sequence = []
+#for line in fc:
+#    if '>' not in line:
+#        sequence.append(line)  
+
+        
+#print(sequence)      
+parseMultiFASTA(fichier_2)
+
+fichier.close
+fichier_2.close
