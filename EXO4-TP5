@@ -1,5 +1,12 @@
 # -*- coding: utf-8 -*-
 """
+Created on Mon Nov 26 14:45:49 2018
+
+@author: utilisateur
+"""
+
+# -*- coding: utf-8 -*-
+"""
 Created on Sat Nov 24 16:53:52 2018
 
 @author: Ondina
@@ -12,18 +19,32 @@ la séquence protéique. Ce dictionnaire aura comme clés "ID" et "organism", "S
 "translation". Bien tester votre parser (vérifier que la taille de la séquence calculée avec la fonction
 len() est égale à la taille indiquée dans le fichier par exemple)."""
 
-f1 = open("C:/Users/Ondina/Downloads/AY411291.embl.txt","r")
-f2 = open("C:/Users/Ondina/Downloads/X65923.embl.txt","r")
-f3 = open("C:/Users/Ondina/Downloads/X64823.embl.txt","r")
+f1 = open("C:/Users/utilisateur/Documents/Cours/M1 DLAD Bioinfo/Programmation/AY411291.embl.txt","r")
+f2 = open("C:/Users/utilisateur/Documents/Cours/M1 DLAD Bioinfo/Programmation/X65923.embl.txt","r")
+f3 = open("C:/Users/utilisateur/Documents/Cours/M1 DLAD Bioinfo/Programmation/X64823.embl.txt","r")
 
 def parseEMBL(f):
     seq = []
+    translation = []
     for line in f:
+        if line.startswith('AC'):
+            ID = line[5:-2]
+        if line.startswith('FT                   /organism='):
+            Organism = line[32:-2]
+        if line.startswith('FT                   /translation=' or 'FT'):
+            for line in f:
+                if (line.startswith('XX')) or (line.startswith('FT   misc_feature')):
+                    break
+                translation.append(line[2:-2])
+#                translation.append(f.readline())
         if line.startswith('SQ'): 
             for line in f:
     #le programme commence a lire a partir díci
                 seq.append(line[5:-4])
-    print(seq)
+    translation = ''.join(translation)
+    seq = ''.join(seq)
+    dict_pEMBL = {'ID': ID, 'organism': Organism, 'SQ': seq, 'translation': translation}
+    print(dict_pEMBL)
  
 parseEMBL(f1)
 
