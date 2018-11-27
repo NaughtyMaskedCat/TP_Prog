@@ -1,0 +1,25 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Wed Nov 21 13:57:20 2018
+
+@author: d14001970
+"""
+
+"""TP 5. Lecture et écriture de fichiers textes
+.1 Lire un fichier CSV
+1.1
+− Récupérez le fichier CSV (comma-separated values) en ligne, et en reprenant les transparents du cours,
+écrivez un une fonction afficheEtudiants() qui prend un nom de fichier en paramètre, et affiche le
+prénom de chaque étudiant suivi de son nom, un étudiant par ligne"""
+import csv
+
+fichier = open("C:/Users/utilisateur/Downloads/m1bbsg2017.csv") #chemin entre "" et mode w ou r ou les deux
+reader = csv.reader(fichier, delimiter=',')
+
+def afficheEtudiant(f):
+    for line in f:
+        print(line[0], line[1])
+
+afficheEtudiant(reader)
+
+fichier.close()
